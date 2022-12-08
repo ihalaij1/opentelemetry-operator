@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator
+          images: ghcr.io/ihalaij1/opentelemetry-operator/target-allocator
           tags: |
             type=match,pattern=v(.*),group=1,value=v${{ env.VERSION }}
 

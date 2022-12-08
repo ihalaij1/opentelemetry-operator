@@ -28,6 +28,7 @@ const (
 	envOtelMetricsExporter = "OTEL_METRICS_EXPORTER"
 	pythonPathPrefix       = "/otel-auto-instrumentation/opentelemetry/instrumentation/auto_instrumentation"
 	pythonPathSuffix       = "/otel-auto-instrumentation"
+	pythonPathTest         = "/a-plus:/mooc-grader:/gitmanager"
 )
 
 func injectPythonSDK(pythonSpec v1alpha1.Python, pod corev1.Pod, index int) (corev1.Pod, error) {
@@ -51,10 +52,10 @@ func injectPythonSDK(pythonSpec v1alpha1.Python, pod corev1.Pod, index int) (cor
 	if idx == -1 {
 		container.Env = append(container.Env, corev1.EnvVar{
 			Name:  envPythonPath,
-			Value: fmt.Sprintf("%s:%s", pythonPathPrefix, pythonPathSuffix),
+			Value: fmt.Sprintf("%s:%s:%s", pythonPathPrefix, pythonPathTest, pythonPathSuffix),
 		})
 	} else if idx > -1 {
-		container.Env[idx].Value = fmt.Sprintf("%s:%s:%s", pythonPathPrefix, container.Env[idx].Value, pythonPathSuffix)
+		container.Env[idx].Value = fmt.Sprintf("%s:%s:%s", pythonPathPrefix, pythonPathTest, pythonPathSuffix)
 	}
 
 	// Set OTEL_TRACES_EXPORTER to HTTP exporter if not set by user because it is what our autoinstrumentation supports.
